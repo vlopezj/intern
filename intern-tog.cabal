@@ -1,17 +1,17 @@
-name:          intern
+name:          intern-tog
 category:      Data, Data Structures
-version:       0.9.2.0
+version:       0.9.1.4
 license:       BSD3
 cabal-version: >= 1.6
 license-file:  LICENSE
 author:        Edward A. Kmett
 maintainer:    Edward A. Kmett <ekmett@gmail.com>
 stability:     experimental
-homepage:      http://github.com/ekmett/intern/
-bug-reports:   http://github.com/ekmett/intern/issues
+homepage:      http://github.com/vlopezj/intern-tog/
+bug-reports:   http://github.com/vlopezj/intern-tog/issues
 copyright:     Copyright (C) 2011-2014 Edward A. Kmett
 build-type:    Simple
-synopsis:      Efficient hash-consing for arbitrary data types (for Tog)
+synopsis:      Efficient hash-consing for arbitrary data types for Tog
 description:
     Changes from 0.8 to 0.9
     .
@@ -40,7 +40,7 @@ extra-source-files: examples/Term.hs .travis.yml
 
 source-repository head
   type: git
-  location: git://github.com/ekmett/intern.git
+  location: git://github.com/vlopezj/intern-tog.git
 
 library
   build-depends:
