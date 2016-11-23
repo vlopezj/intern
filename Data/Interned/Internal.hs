@@ -13,7 +13,6 @@ module Data.Interned.Internal
   , cacheSize
   , Id
   , intern
-  , recover
   ) where
 
 import Data.Array
@@ -85,9 +84,3 @@ intern !bt = unsafeDupablePerformIO $ modifyAdvice $ atomicModifyIORef slot go
   go (CacheState i m) = case HashMap.lookup dt m of
     Nothing -> let t = identify (wid * i + r) bt in (CacheState (i + 1) (HashMap.insert dt t m), t)
     Just t -> (CacheState i m, t)
-
--- given a description, go hunting for an entry in the cache
-recover :: Interned t => Description t -> IO (Maybe t)
-recover !dt = do
-  CacheState _ m <- readIORef $ getCache cache ! (hash dt `mod` cacheWidth dt)
-  return $ HashMap.lookup dt m
