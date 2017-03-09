@@ -34,6 +34,7 @@ instance Interned InternedText where
 
 instance Uninternable InternedText where
   unintern (InternedText _ b) = b
+  internalId = internedTextId
 
 instance Hashable (Description InternedText) where
   hashWithSalt s (DT h) = hashWithSalt s h

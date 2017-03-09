@@ -1,6 +1,6 @@
 name:          intern-tog
 category:      Data, Data Structures
-version:       0.9.1.4
+version:       0.9.1.4.2
 license:       BSD3
 cabal-version: >= 1.6
 license-file:  LICENSE
@@ -62,4 +62,4 @@ library
     Data.Interned.Internal.String
     Data.Interned.Internal.Text
 
-  ghc-options: -Wall
+  ghc-options: -Wall -Werror

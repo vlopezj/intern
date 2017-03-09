@@ -36,6 +36,7 @@ instance Interned InternedString where
 
 instance Uninternable InternedString where
   unintern = uninternString
+  internalId = internedStringId
 
 instance Hashable (Description InternedString) where
   hashWithSalt s (Cons c cs) = foldl' hashWithSalt (hashWithSalt s c) cs

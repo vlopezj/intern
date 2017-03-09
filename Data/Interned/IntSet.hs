@@ -88,7 +88,7 @@ module Data.Interned.IntSet  (
             , minView
 
             -- * Map
-	    , map
+            , map
 
             -- * Fold
             , fold
@@ -214,6 +214,9 @@ instance Uninternable IntSet where
   unintern Nil = UNil
   unintern (Tip _ j) = UTip j
   unintern (Bin _ _ p m l r) = UBin p m l r
+  internalId Nil = 0
+  internalId (Tip i _)  = 1 + i
+  internalId (Bin i _ _ _ _ _)  = 1 + i
 
 type Prefix = Int
 type Mask   = Int

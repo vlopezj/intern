@@ -19,7 +19,6 @@ import Data.Array
 import Data.Hashable
 import Data.HashMap.Strict (HashMap)
 import Data.Foldable
-import Data.Traversable
 import qualified Data.HashMap.Strict as HashMap
 import Data.IORef
 import GHC.IO (unsafeDupablePerformIO, unsafePerformIO)
@@ -71,6 +70,7 @@ class ( Eq (Description t)
   cache        :: Cache t
 
 class Interned t => Uninternable t where
+  internalId :: t -> Id
   unintern :: t -> Uninterned t
 
 intern :: Interned t => Uninterned t -> t

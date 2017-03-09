@@ -35,6 +35,7 @@ instance Interned InternedByteString where
 
 instance Uninternable InternedByteString where
   unintern = uninternByteString
+  internalId = internedByteStringId
 
 ibsCache :: Cache InternedByteString
 ibsCache = mkCache
