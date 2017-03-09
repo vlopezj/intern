@@ -27,8 +27,6 @@ instance Show InternedString where
 
 instance Interned InternedString where
   type Uninterned InternedString = String
-  type Stored InternedString = InternedString
-  store = id
   data Description InternedString = Cons {-# UNPACK #-} !Char String | Nil
     deriving (Eq)
   describe (c:cs) = Cons c cs

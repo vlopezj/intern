@@ -4,7 +4,9 @@
            , BangPatterns
            , GeneralizedNewtypeDeriving
            , AllowAmbiguousTypes
-           , TypeFamilyDependencies #-}
+           , TypeFamilyDependencies
+           , DefaultSignatures
+           #-}
 
 module Data.Interned.Internal
   ( Interned(..)
@@ -60,8 +62,7 @@ class ( Eq (Description t)
       ) => Interned t where
   data Description t
   type Uninterned t
-  type Stored t = s | s -> t 
-  store :: t -> Stored t 
+
   describe :: Uninterned t -> Description t
   identify :: Id -> Uninterned t -> Stored t
   -- identity :: t -> Id
@@ -72,6 +73,13 @@ class ( Eq (Description t)
   modifyAdvice :: IO (Stored t) -> IO (Stored t)
   modifyAdvice = id
   cache        :: Cache t
+
+  -- Custom interned value
+  type Stored t = s | s -> t
+  type Stored t = t
+  store :: t -> Stored t 
+  default store :: (t ~ Stored t) => t -> Stored t
+  store = id
 
 class Interned t => Uninternable t where
   internalId :: t -> Id

@@ -186,7 +186,6 @@ identity (Bin i _ _ _ _ _) = i
 
 instance Interned IntSet where
   type Uninterned IntSet = UninternedIntSet
-  type Stored IntSet = IntSet
   data Description IntSet
     = DNil
     | DTip {-# UNPACK #-} !Int
@@ -201,7 +200,6 @@ instance Interned IntSet where
   identify i (UTip j) = Tip i j
   identify i (UBin p m l r) = Bin i (size l + size r) p m l r
   cache = intSetCache
-  store = id
 
 instance Hashable (Description IntSet) where
   hashWithSalt s DNil = s `hashWithSalt` (0 :: Int)
