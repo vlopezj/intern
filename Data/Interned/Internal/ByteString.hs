@@ -28,6 +28,8 @@ instance Show InternedByteString where
 
 instance Interned InternedByteString where
   type Uninterned InternedByteString = ByteString
+  type Stored InternedByteString = InternedByteString
+  store = id
   newtype Description InternedByteString = DBS ByteString deriving (Eq,Hashable)
   describe = DBS
   identify = InternedByteString

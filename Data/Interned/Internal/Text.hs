@@ -27,6 +27,8 @@ instance Show InternedText where
 
 instance Interned InternedText where
   type Uninterned InternedText = Text
+  type Stored InternedText = InternedText
+  store = id
   newtype Description InternedText = DT Text deriving (Eq)
   describe = DT
   identify = InternedText

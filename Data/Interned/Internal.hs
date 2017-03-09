@@ -2,7 +2,9 @@
            , FlexibleInstances
            , FlexibleContexts
            , BangPatterns
-           , GeneralizedNewtypeDeriving #-}
+           , GeneralizedNewtypeDeriving
+           , AllowAmbiguousTypes
+           , TypeFamilyDependencies #-}
 
 module Data.Interned.Internal
   ( Interned(..)
@@ -29,7 +31,7 @@ defaultCacheWidth = 1024
 
 data CacheState t = CacheState
    { fresh :: {-# UNPACK #-} !Id
-   , content :: !(HashMap (Description t) t)
+   , content :: !(HashMap (Description t) (Stored t))
    }
 
 newtype Cache t = Cache { getCache :: Array Int (IORef (CacheState t)) }
@@ -58,14 +60,16 @@ class ( Eq (Description t)
       ) => Interned t where
   data Description t
   type Uninterned t
+  type Stored t = s | s -> t 
+  store :: t -> Stored t 
   describe :: Uninterned t -> Description t
-  identify :: Id -> Uninterned t -> t
+  identify :: Id -> Uninterned t -> Stored t
   -- identity :: t -> Id
   seedIdentity :: p t -> Id
   seedIdentity _ = 0
   cacheWidth :: p t -> Int
   cacheWidth _ = defaultCacheWidth
-  modifyAdvice :: IO t -> IO t
+  modifyAdvice :: IO (Stored t) -> IO (Stored t)
   modifyAdvice = id
   cache        :: Cache t
 
@@ -73,7 +77,7 @@ class Interned t => Uninternable t where
   internalId :: t -> Id
   unintern :: t -> Uninterned t
 
-intern :: Interned t => Uninterned t -> t
+intern :: Interned t => Uninterned t -> Stored t
 intern !bt = unsafeDupablePerformIO $ modifyAdvice $ atomicModifyIORef slot go
   where
   slot = getCache cache ! r
